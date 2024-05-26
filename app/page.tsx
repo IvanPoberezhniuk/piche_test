@@ -61,7 +61,7 @@ export default function Home() {
   const dispatch = useAppDispatch();
   const eventsList = useAppSelector(selectEventList);
   const status = useAppSelector(selectStatus);
-  const isLoading = status === STATUS.loading;
+  const isLoading = status === STATUS.loading ? true : false;
   const hasError = status === STATUS.failed;
 
   const getEvents = () => {
@@ -70,7 +70,7 @@ export default function Home() {
 
   return (
     <Box component="main" sx={styles.main}>
-      <Typography variant="h2" component="h1">
+      <Typography variant="h2" component="h1" data-testid="title">
         What happened on this date?
       </Typography>
       <Typography variant="h2" component="h1" color="primary.main" fontWeight={500}>
@@ -111,7 +111,7 @@ export default function Home() {
         {!!eventsList?.holidays?.length && <SortableTable list={eventsList.holidays} title="Holidays" disableYear />}
       </Stack>
       <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading}>
-        <CircularProgress />
+        <CircularProgress data-testid="wiki-events-loader" />
       </Backdrop>
       {hasError && <ErrorModal />}
     </Box>

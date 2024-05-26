@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from 'react';
 
-import { Provider as ReduxProvider } from 'react-redux';
+import { Provider } from 'react-redux';
 
 import { AppStore, makeStore, RootState } from '@/libs/store';
 import { theme } from '@/libs/theme';
@@ -15,19 +15,19 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   store?: AppStore;
 }
 
-export function renderWithProviders(ui: React.ReactElement, extendedRenderOptions: ExtendedRenderOptions = {}) {
-  const { preloadedState = {}, store = makeStore(preloadedState), ...renderOptions } = extendedRenderOptions;
+export function renderWithProviders(
+  ui: React.ReactElement,
+  { preloadedState = {}, store = makeStore(preloadedState), ...renderOptions }: ExtendedRenderOptions = {}
+) {
+  function Wrapper({ children }: PropsWithChildren<{}>): JSX.Element {
+    return (
+      <ThemeProvider theme={theme}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Provider store={store}>{children}</Provider>
+        </LocalizationProvider>
+      </ThemeProvider>
+    );
+  }
 
-  const Wrapper = ({ children }: PropsWithChildren) => {
-    <ReduxProvider store={store}>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>,
-      </LocalizationProvider>
-    </ReduxProvider>;
-  };
-
-  return {
-    store,
-    ...render(ui, { wrapper: Wrapper, ...renderOptions }),
-  };
+  return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
 }

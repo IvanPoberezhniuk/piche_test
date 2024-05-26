@@ -67,3 +67,4 @@ export const eventsSlice = createAppSlice({
 
 export const { getWikiEvents } = eventsSlice.actions;
 export const { selectEventList, selectStatus } = eventsSlice.selectors;
+export default eventsSlice.reducer;

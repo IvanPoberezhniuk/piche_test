@@ -91,7 +91,7 @@ const SortableTable = ({ list, title, disableYear = false }: SortableTableProps)
   }, [list]);
 
   return (
-    <Paper sx={styles.paper}>
+    <Paper sx={styles.paper} data-testid="table">
       <TableContainer>
         {title && (
           <Typography variant="h6" id={title} sx={styles.title}>
@@ -144,7 +144,7 @@ const SortableTable = ({ list, title, disableYear = false }: SortableTableProps)
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-        labelRowsPerPage={"Items:"}
+        labelRowsPerPage={'Items:'}
       />
     </Paper>
   );
