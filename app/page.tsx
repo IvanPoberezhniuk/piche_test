@@ -1,18 +1,13 @@
-"use client";
-import * as React from "react";
+'use client';
+import * as React from 'react';
 
-import dayjs, { Dayjs } from "dayjs";
+import dayjs, { Dayjs } from 'dayjs';
 
-import ErrorModal from "@/components/ErrorModal";
-import SortableTable from "@/components/Table";
-import {
-  getWikiEvents,
-  selectEventList,
-  selectStatus,
-  STATUS,
-} from "@/libs/features/wikiEvents/eventsSlice";
-import { useAppDispatch, useAppSelector } from "@/libs/hooks";
-import { LANG_LIST, Language } from "@/types/wiki";
+import ErrorModal from '@/components/ErrorModal';
+import SortableTable from '@/components/Table';
+import { getWikiEvents, selectEventList, selectStatus, STATUS } from '@/libs/features/wikiEvents/eventsSlice';
+import { useAppDispatch, useAppSelector } from '@/libs/hooks';
+import { LANG_LIST, Language } from '@/types/wiki';
 import {
   Backdrop,
   Box,
@@ -24,20 +19,20 @@ import {
   Select,
   Stack,
   Typography,
-} from "@mui/material";
-import { DatePicker } from "@mui/x-date-pickers";
+} from '@mui/material';
+import { DatePicker } from '@mui/x-date-pickers';
 
 const styles = {
   main: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     padding: { xs: 1, md: 4 },
-    minHeight: "100vh",
+    minHeight: '100vh',
   },
   desc: {
     maxWidth: 670,
-    textAlign: "center",
+    textAlign: 'center',
   },
   datePicker: {
     minWidth: 170,
@@ -45,13 +40,13 @@ const styles = {
   form: {
     mt: 2,
     gap: 2,
-    flexDirection: { sm: "row" },
-    width: { xs: "100%", sm: "auto" },
+    flexDirection: { sm: 'row' },
+    width: { xs: '100%', sm: 'auto' },
   },
   tableContainer: {
-    flexDirection: "row",
-    justifyContent: "center",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
     gap: 2,
     pt: 4,
   },
@@ -76,21 +71,11 @@ export default function Home() {
 
   return (
     <Box component="main" sx={styles.main}>
-      <Typography
-        variant="h2"
-        component="h1"
-        data-testid="title"
-        textAlign="center"
-      >
+      <Typography variant="h2" component="h1" data-testid="title" textAlign="center">
         What happened on this date?
       </Typography>
-      <Typography
-        variant="h2"
-        component="h1"
-        color="primary.main"
-        fontWeight={500}
-      >
-        {date.format("DD/MM/YYYY")}
+      <Typography variant="h2" component="h1" color="primary.main" fontWeight={500}>
+        {date.format('DD/MM/YYYY')}
       </Typography>
       <Stack sx={styles.form}>
         <DatePicker
@@ -116,37 +101,17 @@ export default function Home() {
             ))}
           </Select>
         </FormControl>
-        <Button
-          disabled={isLoading}
-          fullWidth
-          variant="contained"
-          onClick={getEvents}
-        >
-          {hasError ? "Try again" : "Load Events"}
+        <Button disabled={isLoading} fullWidth variant="contained" onClick={getEvents}>
+          {hasError ? 'Try again' : 'Load Events'}
         </Button>
       </Stack>
       <Stack sx={styles.tableContainer}>
-        {!!eventsList?.births?.length && (
-          <SortableTable list={eventsList.births} title="Births" />
-        )}
-        {!!eventsList?.deaths?.length && (
-          <SortableTable list={eventsList.deaths} title="Deaths" />
-        )}
-        {!!eventsList?.events?.length && (
-          <SortableTable list={eventsList.events} title="Events" />
-        )}
-        {!!eventsList?.holidays?.length && (
-          <SortableTable
-            list={eventsList.holidays}
-            title="Holidays"
-            disableYear
-          />
-        )}
+        {!!eventsList?.births?.length && <SortableTable list={eventsList.births} title="Births" />}
+        {!!eventsList?.deaths?.length && <SortableTable list={eventsList.deaths} title="Deaths" />}
+        {!!eventsList?.events?.length && <SortableTable list={eventsList.events} title="Events" />}
+        {!!eventsList?.holidays?.length && <SortableTable list={eventsList.holidays} title="Holidays" disableYear />}
       </Stack>
-      <Backdrop
-        sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={isLoading}
-      >
+      <Backdrop sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} open={isLoading}>
         <CircularProgress data-testid="wiki-events-loader" />
       </Backdrop>
       {hasError && <ErrorModal />}

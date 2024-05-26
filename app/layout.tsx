@@ -1,8 +1,9 @@
-import { Inter } from "next/font/google";
+import { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 
-import Provider from "@/components/Provider";
+import Provider from '@/components/Provider';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export default function RootLayout({
   children,
@@ -17,3 +18,10 @@ export default function RootLayout({
     </html>
   );
 }
+export const metadata: Metadata = {
+  title: {
+    template: 'Wiki Events',
+    default: 'Wiki Events',
+  },
+  description: 'Wiki Events Description',
+};
