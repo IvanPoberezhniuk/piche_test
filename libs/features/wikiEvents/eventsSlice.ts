@@ -1,11 +1,11 @@
-import { createAppSlice } from '@/libs/createAppSlice';
+import { createAppSlice } from "@/libs/createAppSlice";
 
-import { getNewsByDate, getNewsByDateType } from './eventsAPI';
+import { getNewsByDate, getNewsByDateType } from "./eventsAPI";
 
 export enum STATUS {
-  idle = 'idle',
-  loading = 'loading',
-  failed = 'failed',
+  idle = "idle",
+  loading = "loading",
+  failed = "failed",
 }
 
 export type EventsData = {
@@ -37,7 +37,7 @@ const initialState: EventsSliceState = {
 };
 
 export const eventsSlice = createAppSlice({
-  name: 'wikiEvents',
+  name: "wikiEvents",
   initialState,
   reducers: (create) => ({
     getWikiEvents: create.asyncThunk(
@@ -56,7 +56,7 @@ export const eventsSlice = createAppSlice({
         rejected: (state) => {
           state.status = STATUS.failed;
         },
-      }
+      },
     ),
   }),
   selectors: {

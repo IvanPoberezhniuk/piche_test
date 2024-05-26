@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { EventsData } from '@/libs/features/wikiEvents/eventsSlice';
+import { EventsData } from "@/libs/features/wikiEvents/eventsSlice";
 import {
   Paper,
   Table,
@@ -12,7 +12,7 @@ import {
   TableRow,
   TableSortLabel,
   Typography,
-} from '@mui/material';
+} from "@mui/material";
 
 interface Data {
   id: number;
@@ -21,28 +21,28 @@ interface Data {
 }
 
 enum DIRECTION {
-  ASC = 'asc',
-  DESC = 'desc',
+  ASC = "asc",
+  DESC = "desc",
 }
 
 enum SORT_PROP {
-  YEAR = 'year',
-  TEXT = 'text',
+  YEAR = "year",
+  TEXT = "text",
 }
 
 const styles = {
   paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexBasis: 'calc(50% - 32px)',
-    justifyContent: 'space-between',
-    alignItems: 'space-between',
+    display: "flex",
+    flexDirection: "column",
+    flexBasis: { xs: "100%", md: "calc(50% - 32px)" },
+    justifyContent: "space-between",
+    alignItems: "space-between",
     minHeight: 485,
   },
   title: {
     pt: 2,
     pl: 2,
-    color: 'primary.main',
+    color: "primary.main",
   },
   cell: {
     year: {
@@ -53,9 +53,17 @@ const styles = {
   pagination: {},
 };
 
-type SortableTableProps = { list: Array<EventsData>; title?: string; disableYear?: boolean };
+type SortableTableProps = {
+  list: Array<EventsData>;
+  title?: string;
+  disableYear?: boolean;
+};
 
-const SortableTable = ({ list, title, disableYear = false }: SortableTableProps) => {
+const SortableTable = ({
+  list,
+  title,
+  disableYear = false,
+}: SortableTableProps) => {
   const [data, setData] = useState<Array<EventsData>>(list);
   const [orderBy, setOrderBy] = useState<SORT_PROP>(SORT_PROP.YEAR);
   const [order, setOrder] = useState<DIRECTION>(DIRECTION.ASC);
@@ -73,7 +81,7 @@ const SortableTable = ({ list, title, disableYear = false }: SortableTableProps)
         } else {
           return a[property] < b[property] ? 1 : -1;
         }
-      })
+      }),
     );
   };
 
@@ -81,7 +89,9 @@ const SortableTable = ({ list, title, disableYear = false }: SortableTableProps)
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
@@ -126,12 +136,16 @@ const SortableTable = ({ list, title, disableYear = false }: SortableTableProps)
           </TableHead>
           <TableBody>
             {data &&
-              data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(({ year, text }) => (
-                <TableRow key={text}>
-                  {!disableYear && <TableCell sx={styles.cell.year}>{year}</TableCell>}
-                  <TableCell>{text}</TableCell>
-                </TableRow>
-              ))}
+              data
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map(({ year, text }) => (
+                  <TableRow key={text}>
+                    {!disableYear && (
+                      <TableCell sx={styles.cell.year}>{year}</TableCell>
+                    )}
+                    <TableCell>{text}</TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -144,7 +158,7 @@ const SortableTable = ({ list, title, disableYear = false }: SortableTableProps)
         page={page}
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
-        labelRowsPerPage={'Items:'}
+        labelRowsPerPage={"Items:"}
       />
     </Paper>
   );

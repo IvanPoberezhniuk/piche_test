@@ -1,7 +1,7 @@
-import type { Action, ThunkAction } from '@reduxjs/toolkit';
-import { combineSlices, configureStore } from '@reduxjs/toolkit';
+import type { Action, ThunkAction } from "@reduxjs/toolkit";
+import { combineSlices, configureStore } from "@reduxjs/toolkit";
 
-import { eventsSlice } from './features/wikiEvents/eventsSlice';
+import { eventsSlice } from "./features/wikiEvents/eventsSlice";
 
 const rootReducer = combineSlices(eventsSlice);
 export type RootState = ReturnType<typeof rootReducer>;
@@ -17,5 +17,10 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
 };
 
 export type AppStore = ReturnType<typeof makeStore>;
-export type AppDispatch = AppStore['dispatch'];
-export type AppThunk<ThunkReturnType = void> = ThunkAction<ThunkReturnType, RootState, unknown, Action>;
+export type AppDispatch = AppStore["dispatch"];
+export type AppThunk<ThunkReturnType = void> = ThunkAction<
+  ThunkReturnType,
+  RootState,
+  unknown,
+  Action
+>;
